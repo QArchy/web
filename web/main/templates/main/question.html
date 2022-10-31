@@ -1,0 +1,14 @@
+{% extends 'main/main.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+  {% if question %}
+    {{ question.title }}
+    <div class="text-white">
+      <h1>HELLO WORLD</h1>
+    </div>
+  {% endif %}
+{% endblock %}

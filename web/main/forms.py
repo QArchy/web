@@ -1,22 +1,31 @@
-from .models import Task
+from .models import Question
 from django.forms import ModelForm, TextInput, Textarea
 
 
-class TaskForm(ModelForm):
+class QuestionForm(ModelForm):
     class Meta:
-        model = Task
-        fields = ["title", "task"]
+        model = Question
+        fields = ["title", "descr", "tags"]
         widgets = {
             'title': TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': 'Введите название'
+                    'class': 'form-control text-white',
+                    'style': 'background-color: rgb(255, 255, 255, 0.1)',
+                    'placeholder': 'Input title'
                 }
             ),
-            'task': Textarea(
+            'descr': Textarea(
                 attrs={
-                    'class': 'form-control',
-                    'placeholder': 'Введите описание'
+                    'class': 'form-control text-white',
+                    'style': 'background-color: rgb(255, 255, 255, 0.1)',
+                    'placeholder': 'Input description'
+                }
+            ),
+            'tags': TextInput(
+                attrs={
+                    'class': 'form-control text-white',
+                    'style': 'background-color: rgb(255, 255, 255, 0.1)',
+                    'placeholder': 'Input tags'
                 }
             )
         }
