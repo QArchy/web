@@ -1,31 +1,43 @@
 from .models import Question
+from .models import Tag
 from django.forms import ModelForm, TextInput, Textarea
 
 
 class QuestionForm(ModelForm):
     class Meta:
         model = Question
-        fields = ["title", "descr", "tags"]
+        fields = ["title", "descr"]
         widgets = {
             'title': TextInput(
                 attrs={
-                    'class': 'form-control text-white',
-                    'style': 'background-color: rgb(255, 255, 255, 0.1)',
-                    'placeholder': 'Input title'
+                    'id': 'inputTitle',
+                    'class': 'form-control',
+                    'placeholder': 'Input title',
+                    'minlength': 10,
                 }
             ),
             'descr': Textarea(
                 attrs={
-                    'class': 'form-control text-white',
-                    'style': 'background-color: rgb(255, 255, 255, 0.1)',
-                    'placeholder': 'Input description'
+                    'id': 'inputDescription',
+                    'class': 'form-control',
+                    'placeholder': 'Input description',
+                    'minlength': 20,
+                    'style': 'resize:none;'
                 }
             ),
-            'tags': TextInput(
+        }
+
+
+class QuestionTagsForm(ModelForm):
+    class Meta:
+        model = Tag
+        fields = ["tag"]
+        widgets = {
+            'tag': TextInput(
                 attrs={
-                    'class': 'form-control text-white',
-                    'style': 'background-color: rgb(255, 255, 255, 0.1)',
-                    'placeholder': 'Input tags'
+                    'id': 'inputTags',
+                    'class': 'form-control',
+                    'placeholder': 'Input tags',
                 }
-            )
+            ),
         }

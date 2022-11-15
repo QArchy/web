@@ -15,46 +15,19 @@
     <!-- Head -->
     <div class="d-flex align-items-md-center mb-2"
          style="background-color: rgb(255, 255, 255, 0.1); border-radius: 0 0 25px 25px">
-        <!-- Main page ref -->
-        <a class="text-white text-decoration-none me-2" href="/" style="margin: 5px">
-            <h1>QArchy's forum</h1>
-        </a>
-        <!-- Search area -->
-        <div class="d-inline-flex">
-            <input class="form-control form-control-sm me-2" type="search" placeholder="Search">
-            <button class="btn text-white me-2"
-                    style="background-color: rgb(255, 255, 255, 0.1)"
-                    type="submit">
-                Search
-            </button>
-            <a class="btn text-white"
-               href="{% url 'create' %}"
-               role="button"
-               style="background-color: rgb(255, 255, 255, 0.1)">
-                ASK!
-            </a>
-        </div>
+        {% include 'main/head.html' %}
         <!-- Menu dependent on user log in/out -->
-        <div class="d-inline-flex ms-auto">
-            <a class="me-3 py-2 text-white text-decoration-none"
-               href="{% url 'home' %}">
-                <h4>Register</h4>
-            </a>
-            <a class="me-3 py-2 text-white text-decoration-none"
-               href="{% url 'about' %}">
-                <h4>Log In</h4>
-            </a>
-        </div>
+        {% block user %}{% endblock %}
     </div>
     <!-- Body -->
     <div class="container">
         <div class="row ps-4 pe-4">
-            <!-- Template body -->
+            <!-- Template left body -->
             <div class="col-8 p-2 box"
                  style="background-color: rgb(255, 255, 255, 0.1); border-radius: 25px 25px 25px 25px">
                 {% block body %}{% endblock %}
             </div>
-            <!-- Hardcoded body -->
+            <!-- Template right body -->
             <div class="col-4 box">
                 <!-- Template tags and members -->
                 <div class="d-flex flex-md-column align-items-md-center"
@@ -64,20 +37,14 @@
                         <h1>Popular Tags</h1>
                     </div>
                     <div class="d-flex flex-wrap text-white justify-content-center">
-                        <!-- For loop -->
-                        <a class="p-1 me-1 text-white text-decoration-none" href="#">
-                            <h6>Pegboard Nerds</h6>
-                        </a>
+                        {% block p_tags %}{% endblock %}
                     </div>
                     <!-- Template members -->
                     <div class="text-white p-2">
                         <h1>Best Members</h1>
                     </div>
                     <div class="d-flex flex-wrap text-white justify-content-center">
-                        <!-- For loop -->
-                        <a class="p-1 me-1 text-white text-decoration-none" href="#">
-                            <h6>Pegboard Nerds</h6>
-                        </a>
+                        {% block b_members %}{% endblock %}
                     </div>
                 </div>
             </div>

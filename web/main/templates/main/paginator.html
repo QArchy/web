@@ -1,0 +1,97 @@
+<ul class="pagination justify-content-center mt-3">
+    <!-- Если количество элементов меньше или равно пяти, рисуем 1..5 -->
+    {% if paginator.page_range|length <= 5 %}
+        {% for p in paginator.page_range %}
+            {% if page_obj.number == p %}
+                 <li class="page-item" style="background-color: rgb(255, 255, 255, 0.1)">
+                    <div class="page-link text-white" aria-disabled="true"
+                       style="background-color: rgb(255, 255, 255, 0.1)">
+                        {{ p }}
+                    </div>
+                </li>
+            {% else %}
+                <li class="page-item" style="background-color: rgb(255, 255, 255, 0.1)">
+                    <a class="page-link text-white" href="?page={{ p }}" aria-disabled="true"
+                       style="background-color: rgb(255, 255, 255, 0.1)">
+                        {{ p }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <!-- Иначе, рисуем Previous, Next, 1 страницу и последнюю + на какой сейчас -->
+        {% if page_obj.number >= 2 %}
+            <li class="page-item" style="background-color: rgb(255, 255, 255, 0.1)">
+                <a class="page-link text-white" href="?page={{ page_obj.number|add:'-1' }}" aria-disabled="true"
+                   style="background-color: rgb(255, 255, 255, 0.1)">
+                    Previous
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item" style="background-color: rgb(255, 255, 255, 0.1)">
+                <div class="page-link text-white" aria-disabled="true"
+                   style="background-color: rgb(0, 0, 0, 0.1)">
+                    Previous
+                </div>
+            </li>
+        {% endif %}
+
+        {% if page_obj.number != 1 %}
+            <li class="page-item" style="background-color: rgb(255, 255, 255, 0.1)">
+                <a class="page-link text-white" href="?page={{ 1 }}" aria-disabled="true"
+                style="background-color: rgb(255, 255, 255, 0.1)">
+                    1
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item" style="background-color: rgb(255, 255, 255, 0.1)">
+                <div class="page-link text-white" aria-disabled="true"
+                style="background-color: rgb(0, 0, 0, 0.1)">
+                    1
+                </div>
+            </li>
+        {% endif %}
+
+        {% if page_obj.number > 1 and page_obj.number < paginator.page_range|length %}
+            <li class="page-item" style="background-color: rgb(255, 255, 255, 0.1)">
+                <div class="page-link text-white" aria-disabled="true"
+                style="background-color: rgb(0, 0, 0, 0.1)">
+                    {{ page_obj.number }}
+                </div>
+            </li>
+        {% endif %}
+
+        {% if page_obj.number != paginator.page_range|length %}
+            <li class="page-item" style="background-color: rgb(255, 255, 255, 0.1)">
+                <a class="page-link text-white" href="?page={{ paginator.page_range|length }}" aria-disabled="true"
+                style="background-color: rgb(255, 255, 255, 0.1)">
+                    {{ paginator.page_range|length }}
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item" style="background-color: rgb(255, 255, 255, 0.1)">
+                <div class="page-link text-white" aria-disabled="true"
+                style="background-color: rgb(0, 0, 0, 0.1)">
+                    {{ paginator.page_range|length }}
+                </div>
+            </li>
+        {% endif %}
+
+        {% if page_obj.number < paginator.page_range|length %}
+            <li class="page-item" style="background-color: rgb(255, 255, 255, 0.1)">
+                <a class="page-link text-white" href="?page={{ page_obj.number|add:1 }}" aria-disabled="true"
+                   style="background-color: rgb(255, 255, 255, 0.1)">
+                    Next
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item" style="background-color: rgb(255, 255, 255, 0.1)">
+                <div class="page-link text-white" aria-disabled="true"
+                   style="background-color: rgb(0, 0, 0, 0.1)">
+                    Next
+                </div>
+            </li>
+        {% endif %}
+
+    {% endif %}
+</ul>
