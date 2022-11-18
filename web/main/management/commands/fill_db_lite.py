@@ -1,11 +1,10 @@
-import random
 from django.core.management.base import BaseCommand
 from ...models import *
 import datetime
 
 
 class Command(BaseCommand):
-    help = 'Fill database'
+    help = 'Fill database but likes quantity on each question equals 1 or 3'
 
     def add_arguments(self, parser):
         parser.add_argument('ratio', type=int)
@@ -64,8 +63,15 @@ class Command(BaseCommand):
                 tag.questions.add(question)
                 tag.save()
                 # fill q_like                               ## QUESTION_LIKE filled
-                m_range = random.randint(5, 100)
-                for m in range(1, m_range):
+                if i % 3 == 0:
+                    for i in range(1, 4):
+                        q_like = QuestionLike(
+                            like=1,
+                            question_id=question.pk,
+                            q_like_id=like.pk,
+                        )
+                        q_like.save()
+                else:
                     q_like = QuestionLike(
                         like=1,
                         question_id=question.pk,
@@ -88,14 +94,12 @@ class Command(BaseCommand):
                                 date=datetime.datetime.now(),
                             )
                             answer.save()
-                            l_range = random.randint(5, 100)
-                            for l in range(5, l_range):
-                                a_like = AnswerLike(
-                                    like=1,
-                                    answer_id=answer.pk,
-                                    a_like_id=like.pk,
-                                )
-                                a_like.save()
+                            a_like = AnswerLike(
+                                like=1,
+                                answer_id=answer.pk,
+                                a_like_id=like.pk,
+                            )
+                            a_like.save()
                         else:
                             answer = Answer(
                                 descr='title title title title title...'
@@ -109,14 +113,12 @@ class Command(BaseCommand):
                                 date=datetime.datetime.now(),
                             )
                             answer.save()
-                            l_range = random.randint(5, 100)
-                            for l in range(5, l_range):
-                                a_like = AnswerLike(
-                                    like=1,
-                                    answer_id=answer.pk,
-                                    a_like_id=like.pk,
-                                )
-                                a_like.save()
+                            a_like = AnswerLike(
+                                like=1,
+                                answer_id=answer.pk,
+                                a_like_id=like.pk,
+                            )
+                            a_like.save()
                 else:
                     for k in range(1, 6):
                         if k == 3:
@@ -132,14 +134,12 @@ class Command(BaseCommand):
                                 date=datetime.datetime.now(),
                             )
                             answer.save()
-                            l_range = random.randint(5, 100)
-                            for l in range(5, l_range):
-                                a_like = AnswerLike(
-                                    like=1,
-                                    answer_id=answer.pk,
-                                    a_like_id=like.pk,
-                                )
-                                a_like.save()
+                            a_like = AnswerLike(
+                                like=1,
+                                answer_id=answer.pk,
+                                a_like_id=like.pk,
+                            )
+                            a_like.save()
                         else:
                             answer = Answer(
                                 descr='title title title title title...'
@@ -153,14 +153,12 @@ class Command(BaseCommand):
                                 date=datetime.datetime.now(),
                             )
                             answer.save()
-                            l_range = random.randint(5, 100)
-                            for l in range(5, l_range):
-                                a_like = AnswerLike(
-                                    like=1,
-                                    answer_id=answer.pk,
-                                    a_like_id=like.pk,
-                                )
-                                a_like.save()
+                            a_like = AnswerLike(
+                                like=1,
+                                answer_id=answer.pk,
+                                a_like_id=like.pk,
+                            )
+                            a_like.save()
 
         stop = datetime.datetime.now()
 

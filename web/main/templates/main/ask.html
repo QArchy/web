@@ -5,16 +5,7 @@
 {% endblock %}
 
 {% block user %}
-    <div class="d-inline-flex ms-auto">
-        <a class="me-3 py-2 text-white text-decoration-none"
-        href="{% url 'register' %}">
-            <h4>Register</h4>
-        </a>
-        <a class="me-3 py-2 text-white text-decoration-none"
-        href="{% url 'login' %}">
-            <h4>Log In</h4>
-        </a>
-    </div>
+    {% include 'includes/head_user.html'%}
 {% endblock %}
 
 {% block body %}
@@ -22,59 +13,51 @@
         <div class="d-flex justify-content-center text-white">
             <h1>New question</h1>
         </div>
-        <form class="p-2" method="post">
-            {% csrf_token %}
-            <!-- Title -->
-            <div class="row g-3 align-items-center mb-2">
-                <div class="col-3">
-                    <label for="inputTitle" class="col-form-label text-white h1">Title</label>
+        {% if request.user.is_authenticated %}
+            <form class="p-2" method="post">
+                {% csrf_token %}
+                {% for field in question_form %}
+                    <div class="row g-3 align-items-center mb-2">
+                        <div class="col-3 align-self-start">
+                            <label for="{{ field.id_for_label }}" class="text-white h6">
+                                {{ field.label }}
+                            </label>
+                        </div>
+                        <div class="col-auto">
+                            {{ field }}
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for field in tag_form %}
+                    <div class="row g-3 align-items-center mb-3">
+                        <div class="col-3">
+                            <label for="{{ field.id_for_label }}" class="col-form-label text-white h6">
+                                {{ field.label }}
+                            </label>
+                        </div>
+                        <div class="col-auto">
+                            {{ field }}
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="d-flex justify-content-center">
+                    <button type="submit"
+                            class="btn btn-lg text-white"
+                            style="background-color: rgb(255, 255, 255, 0.1)">
+                        Ask!
+                    </button>
                 </div>
-                <div class="col-auto">
-                    {{ formQuestion.title }}
-                </div>
-            </div>
-            <!-- Description -->
-            <div class="row g-3 align-items-center mb-2">
-                <div class="col-3">
-                    <label for="inputDescription" class="col-form-label text-white h1">Description</label>
-                </div>
-                <div class="col-auto">
-                    {{ formQuestion.descr }}
-                </div>
-            </div>
-            <!-- Tags -->
-            <div class="row g-3 align-items-center mb-2">
-                <div class="col-3">
-                    <label for="inputTags" class="col-form-label text-white h1">Tags</label>
-                </div>
-                <div class="col-auto">
-                    {{ formTags.tag }}
-                </div>
-            </div>
-            <div class="d-flex justify-content-center mb-3">
-                <button type="submit"
-                        class="btn btn-lg text-white"
-                        style="background-color: rgb(255, 255, 255, 0.1)">
-                    ASK!
-                </button>
-            </div>
+            </form>
+        {% else %}
             <div class="text-white">
-                <h4>{{ error }}</h4>
+                <a class="text-white h3" href="{% url 'login' %}">
+                    You must be authorized to ask a question
+                </a>
             </div>
-        </form>
+        {% endif %}
     </div>
 {% endblock %}
-{% block p_tags %}
-    {% for popular_tag in popular_tags %}
-        <a class="text-white text-decoration-none  me-1" href="{% url 'question_by_tag' popular_tag.tag %}">
-            <h3>{{ popular_tag.tag }}</h3>
-        </a>
-    {% endfor %}
-{% endblock %}
-{% block b_members %}
-    {% for best_member in best_members %}
-        <div class="p-1 me-1 text-white text-decoration-none">
-            <h6>{{ best_member }}</h6>
-        </div>
-    {% endfor %}
+
+{% block tags_members %}
+    {% include 'includes/tags_members.html'%}
 {% endblock %}

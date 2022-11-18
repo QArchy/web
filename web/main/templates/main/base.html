@@ -15,7 +15,7 @@
     <!-- Head -->
     <div class="d-flex align-items-md-center mb-2"
          style="background-color: rgb(255, 255, 255, 0.1); border-radius: 0 0 25px 25px">
-        {% include 'main/head.html' %}
+        {% include 'includes/head.html' %}
         <!-- Menu dependent on user log in/out -->
         {% block user %}{% endblock %}
     </div>
@@ -30,23 +30,7 @@
             <!-- Template right body -->
             <div class="col-4 box">
                 <!-- Template tags and members -->
-                <div class="d-flex flex-md-column align-items-md-center"
-                     style="background-color: rgb(255, 255, 255, 0.1); border-radius: 25px 25px 25px 25px">
-                    <!-- Template tags -->
-                    <div class="d-flex flex-wrap text-white">
-                        <h1>Popular Tags</h1>
-                    </div>
-                    <div class="d-flex flex-wrap text-white justify-content-center">
-                        {% block p_tags %}{% endblock %}
-                    </div>
-                    <!-- Template members -->
-                    <div class="text-white p-2">
-                        <h1>Best Members</h1>
-                    </div>
-                    <div class="d-flex flex-wrap text-white justify-content-center">
-                        {% block b_members %}{% endblock %}
-                    </div>
-                </div>
+                {% block tags_members %}{% endblock %}
             </div>
         </div>
     </div>

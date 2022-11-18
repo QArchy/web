@@ -5,208 +5,49 @@
 {% endblock %}
 
 {% block user %}
-    <div class="d-inline-flex ms-auto">
-        <a class="me-3 py-2 text-white text-decoration-none"
-        href="{% url 'register' %}">
-            <h4>Register</h4>
-        </a>
-        <a class="me-3 py-2 text-white text-decoration-none"
-        href="{% url 'login' %}">
-            <h4>Log In</h4>
-        </a>
-    </div>
+    {% include 'includes/head_user.html'%}
 {% endblock %}
 
 {% block body %}
-{% include 'main/body_head.html' %}
-<!-- Question -->
-<div class="d-flex flex-md-column m-1 p-1 pb-2"
-     style="border: 3px solid lightskyblue;
-            border-radius: 25px 25px 25px 25px">
-    <!-- Avatar and content -->
-    <div class="d-flex">
-        <!-- Avatar -->
-        <div class="d-flex me-2">
-            <div class="avatar">
-                <img src="../../static/img/default_avatar.svg" alt="">
-            </div>
-        </div>
-        <!-- Content -->
-        <div class="d-flex flex-md-column">
-            <div class="text-white text-decoration-none"
-                 style="overflow: hidden;
-                        text-overflow: ellipsis;
-                        display: -webkit-box;
-                        -webkit-line-clamp: 1; /* number of lines to show */
-                                line-clamp: 1;
-                        -webkit-box-orient: vertical;">
-                <h3>{{ question.title }}</h3>
-            </div>
-            <div class="text-white"
-                 style="overflow: hidden;
-                                      text-overflow: ellipsis;
-                                      display: -webkit-box;
-                                      -webkit-line-clamp: 2; /* number of lines to show */
-                                              line-clamp: 2;
-                                      -webkit-box-orient: vertical;">
-                <p>{{ question.descr }}</p>
-            </div>
-        </div>
-    </div>
-    <!-- Like, dislike, answers, tags -->
-    <div class="d-flex p-1">
-        <!-- Like, dislike -->
-        <div class="d-flex me-4">
-            <div class="d-flex flex-md-column me-2">
-                <div class="ms-2 text-white">
-                    <h3>{{ question.likes }}</h3>
+
+    {% include 'includes/body_head.html' %}
+
+    {% include 'includes/question_content.html' %}
+
+    <div class="mt-4 mb-4" style="border: 1px solid lightskyblue"></div>
+
+    {% for answer in page_obj %}
+        {% include 'includes/answer_content.html' %}
+    {% endfor %}
+
+    {% if page_obj|length >= 1 %}
+        {% include 'includes/paginator.html'%}
+
+        <div class="mt-3 mb-4" style="border: 1px solid lightskyblue"></div>
+    {% endif %}
+
+    <div class="d-flex flex-md-column mb-2">
+        <form method="post">
+            {% csrf_token %}
+            <!-- Description -->
+            {% for field in answer_form %}
+                <div class="d-flex justify-content-center mb-2">
+                    <div class="col-10">
+                        {{ field }}
+                    </div>
                 </div>
-                <button class="btn text-white" type="submit"
-                        style="background-color: rgb(255, 255, 255, 0.1)">
-                    +
-                </button>
-            </div>
-            <div class="d-flex flex-md-column">
-                <div class="ms-2 text-white">
-                    <h3>{{ question.dislikes }}</h3>
-                </div>
-                <button class="btn text-white" type="submit"
-                        style="background-color: rgb(255, 255, 255, 0.1)">
-                    -
-                </button>
-            </div>
-        </div>
-        <!-- Tags -->
-        <div class="d-flex">
-            <div class="text-white me-1">
-                <h3>Tags: </h3>
-            </div>
-            {% for tag in question.tag_set.all %}
-                <a class="text-white text-decoration-none me-1" href="{% url 'question_by_tag' tag%}">
-                    <h3>{{ tag }}</h3>
-                </a>
             {% endfor %}
-        </div>
-    </div>
-</div>
-<div class="mt-4 mb-4"
-     style="border: 1px solid lightskyblue">
-</div>
-<!-- Answers -->
-{% for answer in answers %}
-    <div class="ps-4 pe-4">
-        <div class="d-flex flex-md-column m-1 p-1 pb-2"
-             style="border: 3px solid lightskyblue;
-                    border-radius: 25px 25px 25px 25px">
-            <!-- Avatar and content -->
-            <div class="d-flex">
-                <!-- Avatar -->
-                <div class="d-flex me-2">
-                    <div class="avatar">
-                        <img src="../../static/img/default_avatar.svg" alt="">
-                    </div>
-                </div>
-                <!-- Content -->
-                <div class="d-flex flex-md-column">
-                    <div class="text-white"
-                         style="overflow: hidden;
-                                              text-overflow: ellipsis;
-                                              display: -webkit-box;
-                                              -webkit-line-clamp: 2; /* number of lines to show */
-                                                      line-clamp: 2;
-                                              -webkit-box-orient: vertical;">
-                        <p>{{ answer.descr }}</p>
-                    </div>
-                </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit"
+                        class="btn btn-lg text-white h3"
+                        style="background-color: rgb(255, 255, 255, 0.1)">
+                    Answer
+                </button>
             </div>
-            <!-- Like, dislike, answers, tags -->
-            <div class="d-flex p-1">
-                <!-- Like, dislike -->
-                <div class="d-flex me-4">
-                    <div class="d-flex flex-md-column me-2">
-                        <div class="ms-2 text-white">
-                            <h3>{{ answer.likes }}</h3>
-                        </div>
-                        <button class="btn text-white" type="submit"
-                                style="background-color: rgb(255, 255, 255, 0.1)">
-                            +
-                        </button>
-                    </div>
-                    <div class="d-flex flex-md-column">
-                        <div class="ms-2 text-white">
-                            <h3>{{ answer.dislikes }}</h3>
-                        </div>
-                        <button class="btn text-white" type="submit"
-                                style="background-color: rgb(255, 255, 255, 0.1)">
-                            -
-                        </button>
-                    </div>
-                </div>
-                <!-- Correct -->
-                {% if answer.correct == 1 %}
-                    <div class="d-flex">
-                        <input type="checkbox"
-                               id="correct"
-                               class="mt-2 me-2"
-                               name="correct"
-                               value="coding"
-                               style="width: 20px; height: 20px" checked>
-                        <label class="h3 text-white" for="correct">
-                            Correct
-                        </label>
-                    </div>
-                {% else %}
-                    <div class="d-flex">
-                        <input type="checkbox"
-                               id="incorrect"
-                               class="mt-2 me-2"
-                               name="correct"
-                               value="coding"
-                               style="width: 20px; height: 20px">
-                        <label class="h3 text-white" for="correct">
-                            Correct
-                        </label>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
+        </form>
     </div>
-{% endfor %}
-{% include 'main/paginator.html'%}
-<div class="mt-3 mb-4"
-     style="border: 1px solid lightskyblue">
-</div>
-<div class="d-flex flex-md-column mb-2">
-    <form method="post">
-        {% csrf_token %}
-        <!-- Description -->
-        <div class="col-auto mb-3">
-            <textarea type="text" id="inputDescription" class="form-control" aria-describedby="loginHelpInline"
-                      placeholder="Input answer" required minlength="20"
-                      style="resize:none" rows="4" cols="40">
-            </textarea>
-        </div>
-        <div class="d-flex justify-content-center">
-            <button type="submit"
-                    class="btn btn-lg text-white h3"
-                    style="background-color: rgb(255, 255, 255, 0.1)">
-                Answer
-            </button>
-        </div>
-    </form>
-</div>
 {% endblock %}
-{% block p_tags %}
-    {% for popular_tag in popular_tags %}
-        <a class="text-white text-decoration-none  me-1" href="{% url 'question_by_tag' popular_tag.tag %}">
-            <h3>{{ popular_tag.tag }}</h3>
-        </a>
-    {% endfor %}
-{% endblock %}
-{% block b_members %}
-    {% for best_member in best_members %}
-        <div class="p-1 me-1 text-white text-decoration-none">
-            <h6>{{ best_member }}</h6>
-        </div>
-    {% endfor %}
+
+{% block tags_members %}
+    {% include 'includes/tags_members.html'%}
 {% endblock %}

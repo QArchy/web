@@ -1,0 +1,53 @@
+{% if question.author_fk == request.user %}
+    {% if answer.correct == 1 %}
+        <div class="d-flex">
+            <input type="checkbox"
+                   id="correct1"
+                   class="mt-2 me-2"
+                   name="correct"
+                   value="coding"
+                   style="width: 20px; height: 20px" checked>
+            <label class="h3 text-white" for="correct1">
+                Correct
+            </label>
+        </div>
+    {% else %}
+        <div class="d-flex">
+            <input type="checkbox"
+                   id="incorrect1"
+                   class="mt-2 me-2"
+                   name="correct"
+                   value="coding"
+                   style="width: 20px; height: 20px">
+            <label class="h3 text-white" for="incorrect1">
+                Correct
+            </label>
+        </div>
+    {% endif %}
+{% else %}
+    {% if answer.correct == 1 %}
+        <div class="d-flex">
+            <input type="checkbox"
+                   id="correct2"
+                   class="mt-2 me-2"
+                   name="correct"
+                   value="coding"
+                   style="width: 20px; height: 20px" checked disabled>
+            <label class="h3 text-white" for="correct2">
+                Correct
+            </label>
+        </div>
+    {% else %}
+        <div class="d-flex">
+            <input type="checkbox"
+                   id="incorrect2"
+                   class="mt-2 me-2"
+                   name="correct"
+                   value="coding"
+                   style="width: 20px; height: 20px" disabled>
+            <label class="h3 text-white" for="incorrect2">
+                Correct
+            </label>
+        </div>
+    {% endif %}
+{% endif %}

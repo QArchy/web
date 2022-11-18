@@ -1,0 +1,25 @@
+<div class="d-flex flex-md-column align-items-md-center"
+     style="background-color: rgb(255, 255, 255, 0.1); border-radius: 25px 25px 25px 25px">
+    <!-- Template tags -->
+    <div class="d-flex flex-wrap text-white">
+        <h1>Popular Tags</h1>
+    </div>
+    <div class="d-flex flex-wrap text-white justify-content-center">
+        {% for popular_tag in popular_tags %}
+            <a class="text-white text-decoration-none  me-1" href="{% url 'question_by_tag' popular_tag.tag %}">
+                <h3>{{ popular_tag.tag }}</h3>
+            </a>
+        {% endfor %}
+    </div>
+    <!-- Template members -->
+    <div class="text-white p-2">
+        <h1>Best Members</h1>
+    </div>
+    <div class="d-flex flex-wrap text-white justify-content-center">
+        {% for best_member in best_members %}
+            <div class="p-1 me-1 text-white text-decoration-none">
+                <h6>{{ best_member.user_fk.username }}</h6>
+            </div>
+        {% endfor %}
+    </div>
+</div>

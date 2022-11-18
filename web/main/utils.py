@@ -1,3 +1,5 @@
+import os
+from django.template.defaultfilters import register
 from .models import *
 
 
@@ -6,6 +8,10 @@ class DataMixin:
         context = kwargs
         context['best_members'] = Profile.objects.best()
         context['popular_tags'] = Tag.objects.popular()
-        if 'question' in context:
-            context['question'] = Question.objects.get(pk=context['question'])
         return context
+
+
+@register.filter
+def filename(file):
+    return os.path.basename(file)
+

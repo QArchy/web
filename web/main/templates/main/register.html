@@ -5,12 +5,7 @@
 {% endblock %}
 
 {% block user %}
-    <div class="d-inline-flex ms-auto">
-        <a class="me-3 py-2 text-white text-decoration-none"
-        href="{% url 'login' %}">
-            <h4>Log In</h4>
-        </a>
-    </div>
+    {% include 'includes/head_user.html'%}
 {% endblock %}
 
 {% block body %}
@@ -18,94 +13,51 @@
     <div class="d-flex justify-content-center text-white mb-2">
         <h1>Registration</h1>
     </div>
-    <form class="p-2" method="post"
-        oninput='pass2.setCustomValidity(pass2.value !== pass1.value ? "Passwords do not match." : "")'>
+    <form class="p-2" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <!-- Login -->
-        <div class="row g-3 align-items-center mb-2">
-            <div class="col-3">
-                <label for="inputLogin" class="col-form-label text-white h1">Login</label>
+        {% for field in form %}
+            <div class="row g-3 align-items-center mb-2">
+                <div class="col-3">
+                    <label for="{{ field.id_for_label }}" class="col-form-label text-white h6">
+                        {{ field.label }}
+                    </label>
+                </div>
+                <div class="col-auto">
+                    {{ field }}
+                </div>
             </div>
-            <div class="col-auto">
-                <input type="" id="inputLogin" class="form-control" aria-describedby="loginHelpInline"
-                placeholder="Input login" required minlength="4" maxlength="8">
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <div class="col-auto text-white">
+                        <h6>Warning: {{ error|escape }}</h6>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% if form.errors %}
+                {% for error in form.non_field_errors %}
+                    <div class="col-auto text-white">
+                        <h6>Warning: {{ error|escape }}</h6>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <div class="row g-3 align-items-center mb-2">
+                <div class="col-auto">
+                    {{ form.error }}
+                </div>
             </div>
-            <div class="col-auto">
-                <span id="loginHelpInline" class="form-text text-white">
-                  Must be 4-8 characters long.
-                </span>
+        {% endfor %}
+        {% for field in profile_form %}
+            <div class="row g-3 align-items-center mb-2">
+                <div class="col-3">
+                    <label for="{{ field.id_for_label }}" class="col-form-label text-white h6">
+                        {{ field.label }}
+                    </label>
+                </div>
+                <div class="col-auto">
+                    {{ field }}
+                </div>
             </div>
-        </div>
-        <!-- Email -->
-        <div class="row g-3 align-items-center mb-2">
-            <div class="col-3">
-                <label for="inputEmail" class="col-form-label text-white h1">Email</label>
-            </div>
-            <div class="col-auto">
-                <input type="email" id="inputEmail" class="form-control" aria-describedby="emailHelpInline"
-                placeholder="Input email" required minlength="4" maxlength="20">
-            </div>
-            <div class="col-auto">
-                <span id="emailHelpInline" class="form-text text-white">
-                  Must be 4-20 characters long.
-                </span>
-            </div>
-        </div>
-        <!-- Nickname -->
-        <div class="row g-3 align-items-center mb-2">
-            <div class="col-3">
-                <label for="inputNickname" class="col-form-label text-white h1">Nickname</label>
-            </div>
-            <div class="col-auto">
-                <input type="" id="inputNickname" class="form-control" aria-describedby="nicknameHelpInline"
-                placeholder="Input nickname" required minlength="8" maxlength="20">
-            </div>
-            <div class="col-auto">
-                <span id="nicknameHelpInline" class="form-text text-white">
-                  Must be 8-20 characters long.
-                </span>
-            </div>
-        </div>
-        <!-- Password -->
-        <div class="row g-3 align-items-center mb-2">
-            <div class="col-3">
-                <label for="inputPassword" class="col-form-label text-white h1">Password</label>
-            </div>
-            <div class="col-auto">
-                <input type="password" id="inputPassword" class="form-control" aria-describedby="passwordHelpInline"
-                placeholder="Input password" required minlength="8" maxlength="20" name="pass1">
-            </div>
-            <div class="col-auto">
-                <span id="passwordHelpInline" class="form-text text-white">
-                  Must be 8-20 characters long.
-                </span>
-            </div>
-        </div>
-        <!-- Repeat password -->
-        <div class="row g-3 align-items-center mb-2">
-            <div class="col-3">
-                <label for="inputRepeatPassword" class="col-form-label text-white h1">Repeat password</label>
-            </div>
-            <div class="col-auto">
-                <input type="password" id="inputRepeatPassword" class="form-control" aria-describedby="repeatHelpInline"
-                placeholder="Repeat password" required minlength="8" maxlength="20" name="pass2">
-            </div>
-            <div class="col-auto">
-                <span id="repeatHelpInline" class="form-text text-white">
-                  Must be 8-20 characters long.
-                </span>
-            </div>
-        </div>
-        <!-- Avatar -->
-        <div class="row g-3 align-items-center mb-3">
-            <div class="col-3">
-                <label for="inputAvatar" class="col-form-label text-white h1">Upload avatar</label>
-            </div>
-            <div class="col-auto">
-                <input type="file" id="inputAvatar" class="form-control" aria-describedby="avatarHelpInline"
-                required>
-            </div>
-        </div>
+        {% endfor %}
         <div class="d-flex justify-content-center mb-2">
             <button type="submit"
                     class="btn btn-lg text-white me-2"
@@ -116,17 +68,7 @@
     </form>
 </div>
 {% endblock %}
-{% block p_tags %}
-    {% for popular_tag in popular_tags %}
-        <a class="text-white text-decoration-none  me-1" href="{% url 'question_by_tag' popular_tag.tag %}">
-            <h3>{{ popular_tag.tag }}</h3>
-        </a>
-    {% endfor %}
-{% endblock %}
-{% block b_members %}
-    {% for best_member in best_members %}
-        <div class="p-1 me-1 text-white text-decoration-none">
-            <h6>{{ best_member }}</h6>
-        </div>
-    {% endfor %}
+
+{% block tags_members %}
+    {% include 'includes/tags_members.html'%}
 {% endblock %}
