@@ -26,26 +26,32 @@
         <div class="mt-3 mb-4" style="border: 1px solid lightskyblue"></div>
     {% endif %}
 
-    <div class="d-flex flex-md-column mb-2">
-        <form method="post">
-            {% csrf_token %}
-            <!-- Description -->
-            {% for field in answer_form %}
-                <div class="d-flex justify-content-center mb-2">
-                    <div class="col-10">
-                        {{ field }}
+    {% if request.user.is_authenticated %}
+        <div class="d-flex flex-md-column mb-2">
+            <form method="post">
+                {% csrf_token %}
+                <!-- Description -->
+                {% for field in answer_form %}
+                    <div class="d-flex justify-content-center mb-2">
+                        <div class="col-10">
+                            {{ field }}
+                        </div>
                     </div>
+                {% endfor %}
+                <div class="d-flex justify-content-center">
+                    <button type="submit"
+                            class="btn btn-lg text-white h3"
+                            style="background-color: rgb(255, 255, 255, 0.1)">
+                        Answer
+                    </button>
                 </div>
-            {% endfor %}
-            <div class="d-flex justify-content-center">
-                <button type="submit"
-                        class="btn btn-lg text-white h3"
-                        style="background-color: rgb(255, 255, 255, 0.1)">
-                    Answer
-                </button>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
+    {% else %}
+        <div class="d-flex justify-content-center mb-2 text-white">
+            <h3>Login to answer questions</h3>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block tags_members %}

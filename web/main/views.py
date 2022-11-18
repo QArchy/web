@@ -114,7 +114,7 @@ def Question_f(request, question_id):
             answer = Answer(
                 descr=answer_form.cleaned_data['descr'],
                 correct=False,
-                author_fk=Question.objects.get(pk=question_id).author_fk,
+                author_fk=request.user,
                 question_fk=Question.objects.get(pk=question_id),
                 #  date=datetime.datetime.now(),
             )

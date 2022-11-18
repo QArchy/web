@@ -57,7 +57,7 @@ class Command(BaseCommand):
                           'title title title title title...'
                           'title title title title title',
                     author_fk_id=user.pk,
-                    date=datetime.datetime.now(),
+                    #  date=datetime.datetime.now(),
                 )
                 question.save()
                 # fill tag                                  ## TAG filled
@@ -85,7 +85,7 @@ class Command(BaseCommand):
                                 correct=True,
                                 author_fk_id=user.pk,
                                 question_fk_id=question.pk,
-                                date=datetime.datetime.now(),
+                                #  date=datetime.datetime.now(),
                             )
                             answer.save()
                             l_range = random.randint(5, 100)
@@ -106,7 +106,7 @@ class Command(BaseCommand):
                                 correct=False,
                                 author_fk_id=user.pk,
                                 question_fk_id=question.pk,
-                                date=datetime.datetime.now(),
+                                #  date=datetime.datetime.now(),
                             )
                             answer.save()
                             l_range = random.randint(5, 100)
@@ -129,7 +129,7 @@ class Command(BaseCommand):
                                 correct=True,
                                 author_fk_id=user.pk,
                                 question_fk_id=question.pk,
-                                date=datetime.datetime.now(),
+                                #  date=datetime.datetime.now(),
                             )
                             answer.save()
                             l_range = random.randint(5, 100)
@@ -150,7 +150,7 @@ class Command(BaseCommand):
                                 correct=False,
                                 author_fk_id=user.pk,
                                 question_fk_id=question.pk,
-                                date=datetime.datetime.now(),
+                                #  date=datetime.datetime.now(),
                             )
                             answer.save()
                             l_range = random.randint(5, 100)
